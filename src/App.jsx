@@ -11,16 +11,34 @@ function App() {
   const [message, setMessage] = useState("");
   const [response, setResponse] = useState("");
 
-  const handleSend = () => {
-    if (message.trim() === "") return;
+const handleSend = async () => {
+  if (message.trim() === "") return;
 
-    setResponse(
-      `You asked: "${message}". This is a demo BIS AI response.`
-    );
+  try {
+    const res = await fetch("http://127.0.0.1:8000/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message: message,
+      }),
+    });
 
-    setMessage("");
-  };
+    const data = await res.json();
 
+    if (data.response) {
+      setResponse(data.response);
+    } else {
+      setResponse(data.error || "Something went wrong");
+    }
+  } catch (error) {
+    setResponse("Backend connection failed");
+  }
+
+  setMessage("");
+};
+ 
   return (
     <div className="app">
       <Header />
