@@ -14,33 +14,97 @@ function App() {
   const [isTyping, setIsTyping] = useState(false);
 
   // 🔍 Search Function
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (message.trim() === "") return;
 
-    const dummyResults = [
-      {
-        title: "IS 1234 - Steel Standard",
-        description: "Guidelines for steel materials and usage.",
-      },
-      {
-        title: "IS 5678 - Electrical Safety",
-        description: "Safety standards for electrical systems.",
-      },
-      {
-        title: "IS 9101 - Cement Quality",
-        description: "Specifications for cement testing.",
-      },
-    ];
+    try {
+      const res = await fetch("http://127.0.0.1:8000/search", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: message,
+        }),
+      });
 
-    setResults(dummyResults);
+      const data = await res.json();
+
+      setResults(data.results || []);
+
+      setChatHistory((prev) => [
+        ...prev,
+        { sender: "user", text: message },
+        {
+          sender: "bot",
+          text:
+            data.results && data.results.length > 0
+              ? `Found ${data.results.length} matching standard(s).`
+              : "No matching BIS standards found.",
+        },
+      ]);
+
+      setMessage("");
+    } catch (error) {
+      console.error(error);
+
+      setChatHistory((prev) => [
+        ...prev,
+        {
+          sender: "bot",
+          text: "Search backend connection failed.",
+        },
+      ]);
+    }
+  };
+
+  // 🤖 Chat Function
+  const handleChat = async () => {
+    if (message.trim() === "") return;
+
+    const userMessage = message;
 
     setChatHistory((prev) => [
       ...prev,
-      { sender: "user", text: message },
-      { sender: "bot", text: `Showing results for: ${message}` },
+      { sender: "user", text: userMessage },
     ]);
 
     setMessage("");
+    setIsTyping(true);
+
+    try {
+      const res = await fetch("http://127.0.0.1:8000/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: userMessage,
+        }),
+      });
+
+      const data = await res.json();
+
+      setChatHistory((prev) => [
+        ...prev,
+        {
+          sender: "bot",
+          text: data.response || data.error || "No response received.",
+        },
+      ]);
+    } catch (error) {
+      console.error(error);
+
+      setChatHistory((prev) => [
+        ...prev,
+        {
+          sender: "bot",
+          text: "AI backend connection failed.",
+        },
+      ]);
+    } finally {
+      setIsTyping(false);
+    }
   };
 
   return (
@@ -74,8 +138,9 @@ function App() {
         <ChatBox
           message={message}
           setMessage={setMessage}
-          handleSend={handleSearch}
+          handleSend={handleChat}
           chatHistory={chatHistory}
+          isTyping={isTyping}
         />
       </div>
 
@@ -83,7 +148,6 @@ function App() {
       {selectedItem && (
         <div className="modal-overlay">
           <div className="modal-card">
-
             <button
               className="close-btn"
               onClick={() => setSelectedItem(null)}
@@ -93,7 +157,6 @@ function App() {
 
             <h2>{selectedItem.title}</h2>
             <p>{selectedItem.description}</p>
-
           </div>
         </div>
       )}
