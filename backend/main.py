@@ -77,3 +77,45 @@ def chat(data: ChatRequest):
         return {
             "error": str(e)
         }
+
+class SearchRequest(BaseModel):
+    query: str
+
+@app.post("/search")
+def search_standards(data: SearchRequest):
+    sample_standards = [
+        {
+            "code": "IS 456",
+            "title": "Plain and Reinforced Concrete",
+            "description": "Code of practice for structural concrete."
+        },
+        {
+            "code": "IS 800",
+            "title": "General Construction in Steel",
+            "description": "Code of practice for steel structures."
+        },
+        {
+            "code": "IS 1893",
+            "title": "Earthquake Resistant Design",
+            "description": "Criteria for earthquake resistant design of structures."
+        },
+        {
+            "code": "IS 875",
+            "title": "Design Loads",
+            "description": "Design loads for buildings and structures."
+        }
+    ]
+
+    query = data.query.lower()
+
+    results = [
+        standard
+        for standard in sample_standards
+        if query in standard["code"].lower()
+        or query in standard["title"].lower()
+        or query in standard["description"].lower()
+    ]
+
+    return {
+        "results": results
+    }
