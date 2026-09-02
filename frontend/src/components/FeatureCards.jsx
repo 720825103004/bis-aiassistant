@@ -1,34 +1,44 @@
-function FeatureCards() {
+function FeatureCards({ setActiveSection }) {
   return (
-    <section className="cards">
+    <div className="features">
+
+      {/* Search Card */}
       <div className="card">
-        <div className="icon">🔎</div>
-        <h3>Search Standards</h3>
-        <p>Find relevant BIS standards quickly.</p>
-        <button>Search</button>
+        <h3>🔍 Search Standards</h3>
+        <p>Find BIS standards easily</p>
+        <button onClick={() => setActiveSection("search")}>
+          Explore
+        </button>
       </div>
 
+      {/* AI Assistant Card */}
       <div className="card">
-        <div className="icon">🤖</div>
-        <h3>AI Assistant</h3>
-        <p>Ask questions about BIS standards.</p>
-        <button>Ask AI</button>
+        <h3>🤖 AI Assistant</h3>
+        <p>Ask questions about BIS</p>
+        <button onClick={() => setActiveSection("ai")}>
+          Ask Now
+        </button>
       </div>
 
+      {/* Document Analyze Card */}
       <div className="card">
-        <div className="icon">📄</div>
-        <h3>Document Analysis</h3>
-        <p>Upload documents and check compliance.</p>
-        <button>Upload</button>
+        <h3>📄 Document Analyze</h3>
+        <p>Upload and analyze documents</p>
+        <button onClick={() => setActiveSection("upload")}>
+          Upload
+        </button>
       </div>
 
+      {/* Compare Card */}
       <div className="card">
-        <div className="icon">⚖️</div>
-        <h3>Compare Standards</h3>
-        <p>Compare two BIS standards easily.</p>
-        <button>Compare</button>
+        <h3>⚖️ Compare</h3>
+        <p>Compare multiple standards</p>
+        <button onClick={() => setActiveSection("compare")}>
+          Compare
+        </button>
       </div>
-    </section>
+
+    </div>
   );
 }
 
