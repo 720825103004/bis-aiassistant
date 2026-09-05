@@ -1,10 +1,14 @@
 import json
 import requests
+import os
+import tempfile
 
 from google.auth.transport.requests import Request
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from pypdf import PdfReader
+
 
 from load_creds import load_creds
 
@@ -152,3 +156,106 @@ def search_standards(data: SearchRequest):
     return {
         "results": results
     }
+
+@app.post("/analyze-document")
+async def analyze_document(file: UploadFile = File(...)):
+    try:
+        if not file.filename.lower().endswith(".pdf"):
+            return {
+                "error": "Please upload a PDF file only."
+            }
+
+        contents = await file.read()
+
+        with tempfile.NamedTemporaryFile(
+            delete=False,
+            suffix=".pdf"
+        ) as temp:
+            temp.write(contents)
+            temp_path = temp.name
+
+        reader = PdfReader(temp_path)
+
+        extracted_text = ""
+
+        for page in reader.pages:
+            page_text = page.extract_text()
+
+            if page_text:
+                extracted_text += page_text + "\n"
+
+        os.remove(temp_path)
+
+        if not extracted_text.strip():
+            return {
+                "error": "No readable text found in the PDF."
+            }
+
+        if not creds.valid:
+            creds.refresh(Request())
+
+        url = (
+            "https://generativelanguage.googleapis.com/v1beta/"
+            "models/gemini-3.5-flash-lite:generateContent"
+        )
+
+        headers = {
+            "Authorization": f"Bearer {creds.token}",
+            "Content-Type": "application/json",
+            "x-goog-user-project": project_id,
+        }
+
+        prompt = f"""
+You are a BIS standards compliance assistant.
+
+Analyze the following document text.
+
+Give:
+1. Short summary
+2. BIS standards mentioned
+3. Important compliance points
+4. Possible issues or risks
+5. Recommendations
+
+Document:
+{extracted_text[:12000]}
+"""
+
+        body = {
+            "contents": [
+                {
+                    "parts": [
+                        {
+                            "text": prompt
+                        }
+                    ]
+                }
+            ]
+        }
+
+        r = requests.post(
+            url,
+            headers=headers,
+            json=body,
+            timeout=60
+        )
+
+        result = r.json()
+
+        if r.status_code != 200:
+            return {
+                "error": result
+            }
+
+        analysis = result["candidates"][0]["content"]["parts"][0]["text"]
+
+        return {
+            "filename": file.filename,
+            "message": "Document analyzed successfully",
+            "analysis": analysis
+        }
+
+    except Exception as e:
+        return {
+            "error": str(e)
+        }

@@ -1,19 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f7fb;
+  font-family: "Inter", sans-serif;
+  background: linear-gradient(135deg, #eef4ff, #f8fbff);
   color: #172033;
 }
 
 .app {
-  min-height: 100vh;
+  min-height: auto;
+  padding-bottom: 30px;
 }
 
-/* Header */
 .header {
   background: #123b68;
   color: white;
@@ -375,4 +378,323 @@ footer {
   border: none;
   padding: 5px 8px;
   cursor: pointer;
+}
+
+.analysis-text {
+  margin: 30px auto;
+  padding: 24px;
+  max-width: 900px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  text-align: left;
+}
+
+.analysis-text h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.analysis-text {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+.analysis-result {
+  margin: 30px auto;
+  padding: 30px;
+  max-width: 950px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  text-align: left;
+}
+
+.analysis-result h2 {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.analysis-text {
+  white-space: pre-wrap;
+  line-height: 1.8;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #222;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background:
+    radial-gradient(circle at top left, #dbeafe 0%, transparent 30%),
+    radial-gradient(circle at top right, #ede9fe 0%, transparent 30%),
+    linear-gradient(135deg, #f8fbff, #eef4ff);
+  color: #0f172a;
+}
+
+.app {
+  min-height: 100vh;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  padding: 28px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 20px;
+  padding: 26px 20px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  transition: 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(37, 99, 235, 0.16);
+}
+
+.card h3 {
+  font-size: 21px;
+  color: #0f3b75;
+  margin-bottom: 10px;
+}
+
+.card p {
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.card button {
+  border: none;
+  padding: 11px 22px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.card button:hover {
+  transform: scale(1.04);
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
+}
+
+.analysis-result {
+  grid-column: 1 / -1;
+  margin: 15px auto 35px;
+  padding: 34px;
+  width: min(100%, 1000px);
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 22px;
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.12);
+}
+
+.analysis-result h2 {
+  text-align: left;
+  font-size: 28px;
+  color: #312e81;
+  margin-bottom: 24px;
+}
+
+.analysis-text {
+  white-space: pre-wrap;
+  line-height: 1.85;
+  font-size: 16px;
+  color: #334155;
+  background: linear-gradient(135deg, #f8fafc, #f5f3ff);
+  border-radius: 16px;
+  padding: 24px;
+  border-left: 5px solid #6366f1;
+}
+
+@media (max-width: 900px) {
+  .features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .features {
+    grid-template-columns: 1fr;
+  }
+}
+
+.analysis-result {
+  grid-column: 1 / -1;
+  width: min(92%, 1000px);
+  margin: 30px auto;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(99, 102, 241, 0.12);
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
+  text-align: left;
+}
+
+.analysis-result h2 {
+  margin: 0 0 24px;
+  text-align: center;
+  font-size: 28px;
+  font-weight: 800;
+  color: #123b6d;
+}
+
+.analysis-text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.85;
+  font-size: 16px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #26364a;
+
+  background: linear-gradient(135deg, #f8fbff, #f6f3ff);
+  border: 1px solid #e5e7eb;
+  border-left: 5px solid #6366f1;
+  border-radius: 18px;
+  padding: 26px;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  padding: 28px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 20px;
+  padding: 24px 18px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(37, 99, 235, 0.16);
+}
+
+.card button {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.card button:hover {
+  transform: scale(1.03);
+}
+
+@media (max-width: 900px) {
+  .features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  .analysis-result {
+    width: 95%;
+    padding: 20px;
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-logo {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 800;
+  color: white;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  box-shadow: 0 8px 22px rgba(79, 70, 229, 0.3);
+}
+
+.analyzing-box {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #4f46e5;
+  font-weight: 600;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid #ddd6fe;
+  border-top-color: #4f46e5;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.analysis-result h2 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #1e3a8a;
+  margin-bottom: 22px;
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 20px 45px rgba(37, 99, 235, 0.16);
+}
+
+.app {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  min-height: auto;
+  padding-bottom: 20px;
+}
+
+.features {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 24px;
+}
+
+.hero {
+  width: 100%;
+}
+
+.chat-section,
+.chat-container {
+  margin-bottom: 10px;
 }

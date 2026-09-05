@@ -46,8 +46,8 @@ function ChatBox({ message, setMessage, handleSend, chatHistory }) {
 
   {/* SEND / VOICE BUTTON */}
   <button className="send-btn" onClick={handleSend}>
-    🔵
-  </button>
+  ➤
+</button>
 
 </div>
     </section>
