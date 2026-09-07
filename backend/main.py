@@ -259,3 +259,83 @@ Document:
         return {
             "error": str(e)
         }
+
+@app.post("/compare")
+def compare_standards(data: dict):
+    try:
+        standard1 = data.get("standard1", "")
+        standard2 = data.get("standard2", "")
+
+        if not creds.valid:
+            creds.refresh(Request())
+
+        url = (
+            "https://generativelanguage.googleapis.com/v1beta/"
+            "models/gemini-3.5-flash-lite:generateContent"
+        )
+
+        headers = {
+            "Authorization": f"Bearer {creds.token}",
+            "Content-Type": "application/json",
+            "x-goog-user-project": project_id,
+        }
+
+        prompt = f"""
+You are a BIS standards compliance assistant.
+
+Compare these two BIS standards:
+
+Standard 1: {standard1}
+Standard 2: {standard2}
+
+Give the result in this format:
+
+1. Purpose
+2. Scope
+3. Main material or application
+4. Important compliance points
+5. Key differences
+6. Similarities
+7. When each standard should be used
+
+Keep the answer clear and concise.
+"""
+
+        body = {
+            "contents": [
+                {
+                    "parts": [
+                        {
+                            "text": prompt
+                        }
+                    ]
+                }
+            ]
+        }
+
+        r = requests.post(
+            url,
+            headers=headers,
+            json=body,
+            timeout=60
+        )
+
+        result = r.json()
+
+        if r.status_code != 200:
+            return {
+                "error": result
+            }
+
+        comparison = result["candidates"][0]["content"]["parts"][0]["text"]
+
+        return {
+            "standard1": standard1,
+            "standard2": standard2,
+            "comparison": comparison
+        }
+
+    except Exception as e:
+        return {
+            "error": str(e)
+        }

@@ -2,7 +2,7 @@ function Header() {
   return (
     <header className="header">
       <div className="brand">
-        <div className="brand-logo">B</div>
+       <div className="brand-logo">AI</div> 
 
         <div>
           <h1>BIS AI Assistant</h1>
